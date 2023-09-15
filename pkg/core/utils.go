@@ -1,11 +1,12 @@
 package core
 
 import (
+	"fmt"
 	"os"
 	"path"
 )
 
-func getBaseDir() (string, error) {
+func GetBaseDir() (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", err
@@ -21,4 +22,15 @@ func getBaseDir() (string, error) {
 	}
 
 	return baseDir, nil
+}
+
+func GetDBPath(year int) (string, error) {
+	baseDir, err := GetBaseDir()
+	if err != nil {
+		return "", err
+	}
+
+	dbPath := path.Join(baseDir, fmt.Sprintf("%d.db", year))
+
+	return dbPath, nil
 }

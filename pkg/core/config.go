@@ -13,7 +13,7 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	baseDir, err := getBaseDir()
+	baseDir, err := GetBaseDir()
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func LoadConfig() (*Config, error) {
 }
 
 func (c *Config) SaveConfig() error {
-	baseDir, err := getBaseDir()
+	baseDir, err := GetBaseDir()
 	if err != nil {
 		return err
 	}

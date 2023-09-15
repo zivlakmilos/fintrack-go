@@ -14,7 +14,12 @@ func main() {
 		return
 	}
 
-	sql, err := db.Open(":memory:")
+	dbPath, err := core.GetDBPath(config.Year)
+	if err != nil {
+		return
+	}
+
+	sql, err := db.Open(dbPath)
 	if err != nil {
 		fmt.Printf("got error %v", err)
 		return
