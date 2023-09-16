@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
@@ -21,6 +22,14 @@ func NewUi() (*Ui, error) {
 	layout := ui.createLayout()
 
 	ui.app.SetRoot(layout, true)
+
+	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		if event.Key() == tcell.KeyF1 {
+			fmt.Printf("F1")
+		}
+
+		return event
+	})
 
 	return &ui, nil
 }
@@ -76,11 +85,12 @@ func (u *Ui) createFooter() *tview.TextView {
 		id    int
 		title string
 	}{
-		{id: 1, title: "New Income"},
-		{id: 2, title: "New Expense"},
-		{id: 3, title: "Repports"},
-		{id: 4, title: "Graphs"},
-		{id: 5, title: "Accounts"},
+		{id: 1, title: "Info"},
+		{id: 2, title: "New Income"},
+		{id: 3, title: "New Expense"},
+		{id: 4, title: "Repports"},
+		{id: 5, title: "Graphs"},
+		{id: 6, title: "Accounts"},
 		{id: 9, title: "Open Year"},
 		{id: 0, title: "Exit"},
 	}
