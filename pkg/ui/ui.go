@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
@@ -11,6 +12,7 @@ import (
 type Ui struct {
 	app   *tview.Application
 	pages *tview.Pages
+	menu  *tview.TextView
 }
 
 func NewUi() (*Ui, error) {
@@ -24,8 +26,11 @@ func NewUi() (*Ui, error) {
 	ui.app.SetRoot(layout, true)
 
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-		if event.Key() == tcell.KeyF1 {
-			fmt.Printf("F1")
+		for _, item := range mainMenu {
+			if event.Key() == item.key {
+				ui.menu.Highlight(strconv.Itoa(item.id)).ScrollToHighlight()
+				return nil
+			}
 		}
 
 		return event
@@ -41,6 +46,8 @@ func (u *Ui) Run() error {
 func (u *Ui) createLayout() *tview.Grid {
 	header := u.createHeader()
 	footer := u.createFooter()
+
+	u.menu = footer
 
 	grid := tview.NewGrid().
 		SetRows(3, 0, 1).
@@ -80,20 +87,6 @@ func (u *Ui) createFooter() *tview.TextView {
 		SetHighlightedFunc(func(added, removed, remaining []string) {
 			u.pages.SwitchToPage(added[0])
 		})
-
-	mainMenu := []struct {
-		id    int
-		title string
-	}{
-		{id: 1, title: "Info"},
-		{id: 2, title: "New Income"},
-		{id: 3, title: "New Expense"},
-		{id: 4, title: "Repports"},
-		{id: 5, title: "Graphs"},
-		{id: 6, title: "Accounts"},
-		{id: 9, title: "Open Year"},
-		{id: 0, title: "Exit"},
-	}
 
 	for _, item := range mainMenu {
 		fmt.Fprintf(footer, `%d ["%d"][darkcyan]%s[white][""]  `, item.id, item.id, item.title)
