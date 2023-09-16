@@ -5,18 +5,18 @@ import (
 )
 
 type menuItem struct {
-	id    int
+	id    string
 	title string
 	key   tcell.Key
 }
 
 var mainMenu = []menuItem{
-	{id: 1, key: tcell.KeyF1, title: "Info"},
-	{id: 2, key: tcell.KeyF2, title: "New Income"},
-	{id: 3, key: tcell.KeyF3, title: "New Expense"},
-	{id: 4, key: tcell.KeyF4, title: "Repports"},
-	{id: 5, key: tcell.KeyF5, title: "Graphs"},
-	{id: 6, key: tcell.KeyF6, title: "Accounts"},
-	{id: 9, key: tcell.KeyF9, title: "Open Year"},
-	{id: 0, key: tcell.KeyF10, title: "Exit"},
+	{id: "F1", key: tcell.KeyF1, title: "Info"},
+	{id: "F2", key: tcell.KeyF2, title: "New Income"},
+	{id: "F3", key: tcell.KeyF3, title: "New Expense"},
+	{id: "F4", key: tcell.KeyF4, title: "Repports"},
+	{id: "F5", key: tcell.KeyF5, title: "Graphs"},
+	{id: "F6", key: tcell.KeyF6, title: "Accounts"},
+	{id: "F9", key: tcell.KeyF9, title: "Open Year"},
+	{id: "F10", key: tcell.KeyF10, title: "Exit"},
 }

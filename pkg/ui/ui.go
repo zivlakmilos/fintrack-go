@@ -2,7 +2,6 @@ package ui
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
@@ -28,13 +27,15 @@ func NewUi() (*Ui, error) {
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		for _, item := range mainMenu {
 			if event.Key() == item.key {
-				ui.menu.Highlight(strconv.Itoa(item.id)).ScrollToHighlight()
+				ui.menu.Highlight(item.id).ScrollToHighlight()
 				return nil
 			}
 		}
 
 		return event
 	})
+
+	ui.menu.Highlight("F1")
 
 	return &ui, nil
 }
@@ -89,7 +90,7 @@ func (u *Ui) createFooter() *tview.TextView {
 		})
 
 	for _, item := range mainMenu {
-		fmt.Fprintf(footer, `%d ["%d"][darkcyan]%s[white][""]  `, item.id, item.id, item.title)
+		fmt.Fprintf(footer, `%s ["%s"][darkcyan]%s[white][""]  `, item.id, item.id, item.title)
 	}
 
 	return footer
