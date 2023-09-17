@@ -32,7 +32,7 @@ func InitDB(db *sql.DB) error {
 		return err
 	}
 
-	err = execQuery(db, "CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, accountId TEXT, credit REAL, debit REAL, description TEXT, date TEXT)")
+	err = execQuery(db, "CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, accountId TEXT, recordId TEXT, credit REAL, debit REAL, description TEXT, date TEXT)")
 	if err != nil {
 		return err
 	}
