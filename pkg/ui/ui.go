@@ -100,5 +100,6 @@ func (u *Ui) createFooter() *tview.TextView {
 }
 
 func (u *Ui) createPages() {
+	u.pages.AddPage("0", createInfoScreen(), true, false)
 	u.pages.AddPage("1", createIncomeScreen(), true, false)
 }
