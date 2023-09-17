@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
@@ -20,14 +21,16 @@ func NewUi() (*Ui, error) {
 	ui.app = tview.NewApplication()
 	ui.pages = tview.NewPages()
 
+	ui.createPages()
+
 	layout := ui.createLayout()
 
 	ui.app.SetRoot(layout, true)
 
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-		for _, item := range mainMenu {
+		for idx, item := range mainMenu {
 			if event.Key() == item.key {
-				ui.menu.Highlight(item.id).ScrollToHighlight()
+				ui.menu.Highlight(strconv.Itoa(idx)).ScrollToHighlight()
 				return nil
 			}
 		}
@@ -35,7 +38,7 @@ func NewUi() (*Ui, error) {
 		return event
 	})
 
-	ui.menu.Highlight("F1")
+	ui.menu.Highlight("0")
 
 	return &ui, nil
 }
@@ -54,7 +57,7 @@ func (u *Ui) createLayout() *tview.Grid {
 		SetRows(3, 0, 1).
 		SetColumns(0).
 		AddItem(header, 0, 0, 1, 1, 0, 0, false).
-		AddItem(u.pages, 1, 0, 1, 1, 0, 0, false).
+		AddItem(u.pages, 1, 0, 1, 1, 0, 0, true).
 		AddItem(footer, 2, 0, 1, 1, 0, 0, false).
 		SetBorders(true)
 
@@ -89,9 +92,13 @@ func (u *Ui) createFooter() *tview.TextView {
 			u.pages.SwitchToPage(added[0])
 		})
 
-	for _, item := range mainMenu {
-		fmt.Fprintf(footer, `%s ["%s"][darkcyan]%s[white][""]  `, item.id, item.id, item.title)
+	for idx, item := range mainMenu {
+		fmt.Fprintf(footer, `%s ["%d"][darkcyan]%s[white][""]  `, item.id, idx, item.title)
 	}
 
 	return footer
+}
+
+func (u *Ui) createPages() {
+	u.pages.AddPage("1", createIncomeScreen(), true, false)
 }
