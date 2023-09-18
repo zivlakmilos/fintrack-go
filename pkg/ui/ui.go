@@ -1,22 +1,32 @@
 package ui
 
 import (
+	"database/sql"
 	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
+	"github.com/zivlakmilos/fintrack-go/pkg/core"
+	"github.com/zivlakmilos/fintrack-go/pkg/db"
 )
 
 type Ui struct {
-	app   *tview.Application
-	pages *tview.Pages
-	menu  *tview.TextView
+	app     *tview.Application
+	pages   *tview.Pages
+	menu    *tview.TextView
+	db      *sql.DB
+	screens []func() tview.Primitive
 }
 
 func NewUi() (*Ui, error) {
 	ui := Ui{}
+
+	err := ui.loadData()
+	if err != nil {
+		return nil, err
+	}
 
 	ui.app = tview.NewApplication()
 	ui.pages = tview.NewPages()
@@ -45,6 +55,25 @@ func NewUi() (*Ui, error) {
 
 func (u *Ui) Run() error {
 	return u.app.Run()
+}
+
+func (u *Ui) loadData() error {
+	config, err := core.LoadConfig()
+	if err != nil {
+		return err
+	}
+
+	dbPath, err := core.GetDBPath(config.Year)
+	if err != nil {
+		return err
+	}
+
+	u.db, err = db.Open(dbPath)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (u *Ui) createLayout() *tview.Grid {
@@ -89,6 +118,8 @@ func (u *Ui) createFooter() *tview.TextView {
 		SetRegions(true).
 		SetWrap(false).
 		SetHighlightedFunc(func(added, removed, remaining []string) {
+			idx, _ := strconv.Atoi(added[0])
+			u.pages.AddPage(added[0], u.screens[idx](), true, false)
 			u.pages.SwitchToPage(added[0])
 		})
 
@@ -100,6 +131,8 @@ func (u *Ui) createFooter() *tview.TextView {
 }
 
 func (u *Ui) createPages() {
-	u.pages.AddPage("0", createInfoScreen(), true, false)
-	u.pages.AddPage("1", createIncomeScreen(), true, false)
+	u.screens = []func() tview.Primitive{
+		u.createInfoScreen,
+		u.createIncomeScreen,
+	}
 }

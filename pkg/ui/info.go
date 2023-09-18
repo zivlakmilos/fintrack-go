@@ -17,7 +17,7 @@ const logo = `
                                                                   
 `
 
-func createInfoScreen() tview.Primitive {
+func (u *Ui) createInfoScreen() tview.Primitive {
 	logoBox := tview.NewTextView().
 		SetTextColor(tcell.ColorBlue).
 		SetTextAlign(tview.AlignCenter)
