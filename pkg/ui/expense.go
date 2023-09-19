@@ -21,7 +21,7 @@ type ExpenseScreen struct {
 }
 
 func (u *Ui) createExpenseScreen() tview.Primitive {
-	expenseAccounts, expenseIds := loadIncomeScreenAccounts(db.AccountTypeIncome, u.db)
+	expenseAccounts, expenseIds := loadIncomeScreenAccounts(db.AccountTypeExpense, u.db)
 	receiveAccounts, receiveIds := loadIncomeScreenAccounts(db.AccountTypeAsset, u.db)
 
 	expenseScreen := ExpenseScreen{
