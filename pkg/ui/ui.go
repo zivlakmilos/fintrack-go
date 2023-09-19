@@ -139,6 +139,7 @@ func (u *Ui) createPages() {
 	u.screens = []func() tview.Primitive{
 		u.createInfoScreen,
 		u.createIncomeScreen,
+		u.createExpenseScreen,
 	}
 }
 
