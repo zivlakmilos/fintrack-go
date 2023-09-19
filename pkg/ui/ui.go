@@ -73,6 +73,11 @@ func (u *Ui) loadData() error {
 		return err
 	}
 
+	err = db.InitDB(u.db)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
