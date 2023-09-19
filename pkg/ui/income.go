@@ -16,7 +16,7 @@ func (u *Ui) createIncomeScreen() tview.Primitive {
 	form := tview.NewForm().
 		AddDropDown("Income", incomeAccounts, 0, nil).
 		AddDropDown("Account", receiveAccounts, 0, nil).
-		AddInputField("Amount", "0.00", 20, nil, nil).
+		AddInputField("Amount", "0.00", 25, nil, nil).
 		AddButton("Save", nil).
 		AddButton("Cancel", nil)
 
@@ -25,7 +25,7 @@ func (u *Ui) createIncomeScreen() tview.Primitive {
 	form.SetBorder(true)
 	form.SetTitle(" New Income ")
 
-	return center(30, 12, form)
+	return center(35, 12, form)
 }
 
 func loadIncomeScreenAccounts(accountType db.AccountType, con *sql.DB) []string {
