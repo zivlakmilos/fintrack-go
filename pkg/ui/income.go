@@ -29,7 +29,7 @@ func (u *Ui) createIncomeScreen() tview.Primitive {
 }
 
 func loadIncomeScreenAccounts(accountType db.AccountType, con *sql.DB) []string {
-	accounts, err := db.SelectAccounts(squirrel.Select().Where("type=?", accountType).RunWith(con))
+	accounts, err := db.SelectAccounts(squirrel.Select().Where("type=?", accountType).OrderBy("code").RunWith(con))
 	if err != nil {
 		return nil
 	}
