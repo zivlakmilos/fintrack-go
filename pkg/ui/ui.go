@@ -40,7 +40,7 @@ func NewUi() (*Ui, error) {
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		for idx, item := range mainMenu {
 			if event.Key() == item.key {
-				ui.menu.Highlight(strconv.Itoa(idx)).ScrollToHighlight()
+				ui.showPage(idx)
 				return nil
 			}
 		}
@@ -135,4 +135,8 @@ func (u *Ui) createPages() {
 		u.createInfoScreen,
 		u.createIncomeScreen,
 	}
+}
+
+func (u *Ui) showPage(idx int) {
+	u.menu.Highlight(strconv.Itoa(idx)).ScrollToHighlight()
 }

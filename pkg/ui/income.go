@@ -18,7 +18,7 @@ func (u *Ui) createIncomeScreen() tview.Primitive {
 		AddDropDown("Account", receiveAccounts, 0, nil).
 		AddInputField("Amount", "0.00", 25, nil, nil).
 		AddButton("Save", nil).
-		AddButton("Cancel", nil)
+		AddButton("Cancel", func() { u.showPage(0) })
 
 	setFormColors(form)
 
