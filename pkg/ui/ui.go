@@ -140,6 +140,11 @@ func (u *Ui) createPages() {
 		u.createInfoScreen,
 		u.createIncomeScreen,
 		u.createExpenseScreen,
+		nil,
+		nil,
+		u.createAccountsScreen,
+		nil,
+		nil,
 	}
 }
 
